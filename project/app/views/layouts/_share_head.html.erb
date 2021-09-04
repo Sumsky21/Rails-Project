@@ -1,0 +1,12 @@
+<%= stylesheet_link_tag 'album', media: 'all', 'data-turbolinks-track': 'reload' %>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1><%= title %></h1>
+        <p class="lead text-muted" style="max-width: 120%; margin: auto"><%= details %></p>
+        <p>
+          <% buttons.each do |key, link|  %>
+            <a href="<%= link %>" class="btn btn-outline-primary my-2"><%= key %></a>
+          <% end %>
+        </p>
+    </div>
+</section>

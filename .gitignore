@@ -1,0 +1,109 @@
+/.idea/
+
+# Ignore bundler config.
+/cookbook3/.bundle
+
+# Ignore the default SQLite database.
+/cookbook3/db/*.sqlite3
+/cookbook3/db/*.sqlite3-journal
+/cookbook3/db/*.sqlite3-*
+
+# Ignore all logfiles and tempfiles.
+/cookbook3/log/*
+/cookbook3/tmp/*
+!/cookbook3/log/.keep
+!/cookbook3/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+/cookbook3/tmp/pids/*
+!/cookbook3/tmp/pids/
+!/cookbook3/tmp/pids/.keep
+
+
+/cookbook3/public/assets
+/cookbook3/.byebug_history
+
+# Ignore master key for decrypting credentials and more.
+/cookbook3/config/master.key
+
+/cookbook3/public/packs
+/cookbook3/public/packs-test
+/cookbook3/node_modules
+/cookbook3/yarn-error.log
+/cookbook3/yarn-debug.log*
+/cookbook3/.yarn-integrity
+
+
+# Ignore bundler config.
+/blog4/.bundle
+
+# Ignore the default SQLite database.
+/blog4/db/*.sqlite3
+/blog4/db/*.sqlite3-journal
+/blog4/db/*.sqlite3-*
+
+# Ignore all logfiles and tempfiles.
+/blog4/log/*
+/blog4/tmp/*
+!/blog4/log/.keep
+!/blog4/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+/blog4/tmp/pids/*
+!/blog4/tmp/pids/
+!/blog4/tmp/pids/.keep
+
+
+/blog4/public/assets
+/blog4/.byebug_history
+
+# Ignore master key for decrypting credentials and more.
+/blog4/config/master.key
+
+/blog4/public/packs
+/blog4/public/packs-test
+/blog4/node_modules
+/blog4/yarn-error.log
+/blog4/yarn-debug.log*
+/blog4/.yarn-integrity
+/blog4/.rubocop.yml
+
+/cookbook3/.idea/
+/blog4/.idea/
+/project/.idea/
+
+# Ignore bundler config.
+/project/.bundle
+
+# Ignore the default SQLite database.
+/project/db/*.sqlite3
+/project/db/*.sqlite3-journal
+/project/db/*.sqlite3-*
+
+# Ignore all logfiles and tempfiles.
+/project/log/*
+/project/tmp/*
+!/project/log/.keep
+!/project/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+/project/tmp/pids/*
+!/project/tmp/pids/
+!/project/tmp/pids/.keep
+
+# Ignore uploaded files in development.
+/project/storage/*
+!/project/storage/.keep
+
+/project/public/assets
+/project/.byebug_history
+
+# Ignore master key for decrypting credentials and more.
+/project/config/master.key
+
+/project/public/packs
+/project/public/packs-test
+/project/node_modules
+/project/yarn-error.log
+/project/yarn-debug.log*
+/project/.yarn-integrity

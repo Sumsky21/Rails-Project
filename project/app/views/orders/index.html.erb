@@ -1,0 +1,53 @@
+<%= render :partial => 'layouts/share_head', :locals => {title: 'Orders',
+                                                         details: 'After consumer create a order, store owner will also see it immediately.',
+                                                         buttons: @button_group} %>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th></th>
+      <th>Item</th>
+      <% if current_user.usertype != 2 %>
+        <th>Store</th>
+      <% end %>
+      <% if current_user.usertype != 1 %>
+        <th>User</th>
+      <% end %>
+      <th>Update at</th>
+      <th>State</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <td>
+          <div class="thumb_container">
+            <%= image_tag order.item.cover_img, class: 'cover' %>
+          </div>
+        </td>
+        <td class="item-title">
+          <%= link_to order.item.title, order.item %>
+        </td>
+        <% if current_user.usertype != 2 %>
+          <td><%= order.item.user.username %></td>
+        <% end %>
+        <% if current_user.usertype != 1 %>
+          <td><%= order.user.username %></td>
+        <% end %>
+        <td><%= time_ago_in_words(order.updated_at).concat(' ago') %></td>
+        <td><%= state_badge(order.state) %></td>
+        <td><%= link_to 'Detail', order, class: 'btn btn-outline-info btn-block' %></td>
+        <% if can? :delete, order %>
+          <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

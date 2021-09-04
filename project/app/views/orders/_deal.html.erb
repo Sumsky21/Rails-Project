@@ -1,0 +1,82 @@
+<%= stylesheet_link_tag 'users', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<%= bootstrap_form_with(model: order, local: true, layout: :horizontal,
+                        label_col: "col-sm-3 text-right", control_col: "col-sm-9",
+                        html: { class: 'form-signin text-center'}) do |form| %>
+
+  <div class="row" style="margin: 10px 0">
+    <div class="col-sm-4 my-auto">
+      <div class="thumb_container">
+        <%= image_tag order.item.cover_img, class: 'cover' %>
+      </div>
+    </div>
+    <div class="col-sm-5 item-title my-auto">
+      <b><%= order.item.title %></b> <br />
+      <i>Released by: <%= order.item.user.username %></i>
+    </div>
+    <div class="col-sm-3 my-auto" style="align-items: center">
+      <span class="price">￥ <%= order.item.price.to_f * order[:num].to_f %></span>
+    </div>
+  </div>
+
+  <div class="row" style="border-bottom: 2px solid #CCCCCC; margin: 30px 0 "></div>
+
+  <div class="field">
+    <%= form.hidden_field :item_id, value: order[:item_id] %>
+  </div>
+
+  <div class="field">
+    <%= form.hidden_field :user_id, value: order[:user_id] %>
+  </div>
+
+  <div class="field">
+    <%= form.hidden_field :address_id, label: {text: "Address" }, help: "You can also add one through './addresses'." do %>
+      <% Address.where(user_id: current_user.id).each do |addr| %>
+        <div class="card">
+          <div class="card-body text-left">
+            <h6 class="card-subtitle mb-2">
+              <%= form.radio_button :address_id, addr.id, hide_label: true, wrapper_class: "radio-wrapper" %>
+              <b><%= addr.recipient %></b> &nbsp;  <%= addr.phone_number %>
+            </h6>
+            <p class="card-text text-muted"><%= addr.district %>  <%= addr.postal_code %> <br /> <%= addr.details %></p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+  </div>
+
+  <div class="field">
+    <%= form.hidden_field :num, value: order[:num] %>
+  </div>
+
+  <div class="field">
+    <%= form.hidden_field :remark, placeholder: 'Messages you want to send to the store.' %>
+  </div>
+
+
+
+  <% if order.state.zero? and current_user.usertype != 1 %>
+    <div class="field">
+      <%= form.number_field :EMS_code, placeholder: 'Should fill in by store. Leave it blank when create.', required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.hidden_field :state, value: 1 %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit class: 'btn btn-success btn-block', value: 'Deliver' %>
+    </div>
+
+  <% elsif order.state == 1 and current_user.usertype == 1 %>
+    <div class="field">
+      <%= form.hidden_field :state, value: 2 %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit class: 'btn btn-success btn-block', value: 'Confirm Receiving' %>
+    </div>
+  <% end %>
+
+<% end %>

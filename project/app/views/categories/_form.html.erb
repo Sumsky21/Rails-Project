@@ -1,0 +1,37 @@
+<%= stylesheet_link_tag 'users', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= bootstrap_form_with(model: category, local: true, layout: :horizontal,
+    label_col: "col-sm-3 text-right", control_col: "col-sm-9",
+    html: { class: 'form-signin text-center'}) do |form| %>
+
+  <div class="field">
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.select :badge_style, ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'] %>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-sm-3 text-right">Preview</label>
+    <div class="col-sm-9 text-left">
+      <span class="badge text-light bg-primary" id="badge-prev">Category</span>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: 'btn btn-primary btn-block' %>
+  </div>
+<% end %>
+
+<script>
+    $(document).ready(function(){
+        $('#category_name').on('input propertychange', function() {
+            var key = $(this).val();
+            $("#badge-prev").text(key);
+        });
+        $('#category_badge_style').change(function(){
+            var p1 = $(this).children('option:selected').val();//这就是selected的值
+            $("#badge-prev").removeClass().addClass('badge text-light badge-'+p1);
+        })
+    })
+</script>

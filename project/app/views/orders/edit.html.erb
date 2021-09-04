@@ -1,0 +1,14 @@
+<h1>Editing Order</h1>
+
+<% if @order.state.zero? and current_user.usertype == 1 %>
+  <%= render :partial => 'form', locals: {order: @order, item: @order.item, cart_item: @order}%>
+<% else %>
+  <%= render 'deal', order: @order %>
+<% end %>
+
+
+<p style="text-align: center">
+  <%= link_to 'Show', @order %> |
+  <%= link_to 'Back', orders_path %>
+</p>
+

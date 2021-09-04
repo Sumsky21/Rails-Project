@@ -1,0 +1,31 @@
+<%= stylesheet_link_tag 'users', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= bootstrap_form_with(model: item, local: true, layout: :horizontal,
+    label_col: "col-sm-3 text-right", control_col: "col-sm-9",
+    html: { class: 'form-signin text-center'}) do |form| %>
+
+
+  <div>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.collection_select(:category_id, Category.all, :id, :name) %>
+  </div>
+
+  <div>
+    <%= form.text_field :price, help: 'Price per item in CNY.' %>
+  </div>
+
+  <div>
+    <%= form.file_field :cover_img, label: 'Cover Image' %>
+  </div>
+
+
+  <div class="actions">
+    <%= form.submit class: 'btn btn-lg btn-primary btn-block'%>
+  </div>
+<% end %>

@@ -1,0 +1,40 @@
+
+<%= render :partial => 'layouts/share_head', :locals => {title: 'Categories',
+                                                         details: 'Only Admin can create categories. Each item has a category.',
+                                                         buttons: @button_group} %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Including Items</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td class="item-title"><%= category.name %></td>
+        <td><%= category.items.length %></td>
+        <td>
+          <%= link_to 'Show', category, class: 'btn btn-outline-info' %>
+        </td>
+        <td>
+          <% if can? :edit, category %>
+            <%= link_to 'Edit', edit_category_path(category), class: 'btn btn-outline-secondary' %>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :destroy, category %>
+            <%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%#= link_to 'New Category', new_category_path %>

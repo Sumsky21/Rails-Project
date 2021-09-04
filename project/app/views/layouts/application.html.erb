@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ruby Project</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%# Refer to application.js in app/assets/javascript %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%# Refer to application.js in app/javascript %>
+    <%#= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+
+    <%# Navigation Bar on the TOP %>
+    <nav class="navbar navbar-light navbar-expand-lg" style="background-color: #e3f2fd; box-shadow: 0 0 10px #AAAAAA">
+      <a class="navbar-brand" href="/" style="font-weight: bold">B2C on Rails</a>
+
+      <%# Left %>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto" style="flex-direction: row">
+          <li class="nav-item active">
+            <a class="nav-link" href=<%= items_path %>>Items</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href=<%= categories_path %>>Categories</a>
+          </li>
+          <% if current_user && current_user.usertype.zero? %>
+            <li class="nav-item">
+              <a class="nav-link" href=<%= cart_items_path %>> All Cart items</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href=<%= addresses_path %>>All Addresses</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href=<%= orders_path %>>All orders</a>
+            </li>
+          <% end %>
+        </ul>
+
+        <%# Right %>
+        <ul class="navbar-nav" style="flex-direction: row">
+          <% if not current_user %>
+            <li>
+              <a class="btn btn-outline-primary" href="/users/sign_in" role="button">Log in</a>
+            </li>
+            <li>
+              <div style="padding-left: 10px;">
+                <a class="btn btn-outline-success" href="/users/sign_up" role="button">Sign Up</a>
+              </div>
+            </li>
+          <% else %>
+            <li style="display: flex; align-items: center">
+              <b><%= current_user.username %></b> &nbsp;logged in. &nbsp;
+            </li>
+            <li class="nav-item dropdown active" style="display: block">
+              <a class="nav-link dropdown-toggle text=muted" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter-right" viewBox="0 0 16 16">
+                  <path d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z"/>
+                </svg>
+                More
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <%= link_to "Edit my profile", edit_user_registration_path, html_options = {class: 'dropdown-item'} %>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="<%= addresses_path %>">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 1a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"/>
+                  </svg> &nbsp;
+                  My Address
+                </a>
+                <% if current_user.usertype == 1 %>
+                  <a class="dropdown-item" href="<%= cart_items_path %>">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+                      <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </svg> &nbsp;
+                    My Cart
+                  </a>
+                <% end %>
+                <a class="dropdown-item" href="<%= orders_path %>">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-receipt-cutoff" viewBox="0 0 16 16">
+                    <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zM11.5 4a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z"/>
+                    <path d="M2.354.646a.5.5 0 0 0-.801.13l-.5 1A.5.5 0 0 0 1 2v13H.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1H15V2a.5.5 0 0 0-.053-.224l-.5-1a.5.5 0 0 0-.8-.13L13 1.293l-.646-.647a.5.5 0 0 0-.708 0L11 1.293l-.646-.647a.5.5 0 0 0-.708 0L9 1.293 8.354.646a.5.5 0 0 0-.708 0L7 1.293 6.354.646a.5.5 0 0 0-.708 0L5 1.293 4.354.646a.5.5 0 0 0-.708 0L3 1.293 2.354.646zm-.217 1.198l.51.51a.5.5 0 0 0 .707 0L4 1.707l.646.647a.5.5 0 0 0 .708 0L6 1.707l.646.647a.5.5 0 0 0 .708 0L8 1.707l.646.647a.5.5 0 0 0 .708 0L10 1.707l.646.647a.5.5 0 0 0 .708 0L12 1.707l.646.647a.5.5 0 0 0 .708 0l.509-.51.137.274V15H2V2.118l.137-.274z"/>
+                  </svg> &nbsp;
+                  My orders
+                </a>
+              </div>
+            </li>
+            <li>
+              <div style="padding-left: 10px;">
+                <%= link_to "Log out", destroy_user_session_path, :class => "btn btn-outline-danger", :method => :delete %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+    </nav>
+
+    <%#= All notices and alerts using toastr-rails %>
+    <%= custom_bootstrap_flash %>
+
+    <%# Main Panel with footer %>
+    <div class="main">
+      <%= yield :show %>
+    </div>
+
+    <div style="flex: 1">
+      <%= yield %>
+    </div>
+
+    <footer class="card-footer foot">
+      <span class="text-muted">Copyright &copy; 2021 Sumsky. &nbsp; 大作业说明文档请见Gitlab仓库根目录下的
+        <a href="http://ruby-git.act.buaa.edu.cn/ruby-2020/18373582/-/blob/project/README.md">README.md</a>，或参见Github上的
+        <a href="https://gist.github.com/Sumsky21/ccbe48fec68db17dcf869afd0315cf80">镜像</a> 。
+      </span>
+    </footer>
+
+  </body>
+</html>

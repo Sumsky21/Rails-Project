@@ -1,0 +1,33 @@
+<%= stylesheet_link_tag 'users', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<%= bootstrap_form_with(model: address, local: true, layout: :horizontal,
+    label_col: "col-sm-3 text-right", control_col: "col-sm-9",
+    html: { class: 'form-signin text-center'}) do |form| %>
+
+  <div class="field">
+    <%= form.text_field :recipient, placeholder: 'e.g. Huibin Xu' %>
+  </div>
+
+  <div class="field">
+    <%= form.text_field :district, placeholder: 'e.g. Haidian District, Beijing, China',
+                        help: 'Write down the administrative region your address locates in.' %>
+  </div>
+
+  <div class="field">
+    <%= form.text_area :details, placeholder: 'e.g. No.37 Xueyuan Rd, Beihang University, &#10; New Main Building G101',
+                       help: 'Write down the detailed address in text area above.' %>
+  </div>
+
+  <div class="field">
+    <%= form.number_field :postal_code, placeholder: 'e.g. 100191' %>
+  </div>
+
+  <div class="field">
+    <%= form.number_field :phone_number %>
+  </div>
+
+
+  <div class="actions">
+    <%= form.submit class: 'btn btn-primary btn-block' %>
+  </div>
+<% end %>

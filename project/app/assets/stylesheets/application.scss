@@ -1,0 +1,163 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *= require toastr
+ */
+
+@import "bootstrap";
+@import "toastr/build/toastr";
+@import "rails_bootstrap_forms";
+
+body {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+//default background image
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+h1 {
+  margin-top: 15px;
+  text-align: center;
+  font-style: italic;
+}
+
+.table tbody tr td{
+  vertical-align: middle;
+}
+
+th,
+td {
+  text-align: center;
+  diaplay: flex
+}
+
+//using bootstrap table class
+table {
+  @extend .table;
+  @extend .table-hover
+}
+
+//customize navbar list margin
+ul.navbar-nav > li > svg {
+  margin: 0 7px;
+  color: midnightblue;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-weight: bold;
+}
+
+//buttons in forms
+div.actions {
+  margin-top: 25px;
+  margin-bottom: 10px; }
+
+//footer
+.foot {
+  flex: 0;
+}
+//a icon in navbar
+.dropdown-caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  content: "";
+  border-top-style: solid;
+  border-top-width: 5px;
+  border-right: 5px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 5px solid transparent;
+}
+
+//cover image of items
+.thumb_container {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  box-shadow: 0 0 5px #AAAAAA;
+  display: flex;
+  align-items:center;
+  justify-content:center;
+}
+.thumb_container_index {
+  width: 100%;
+  height: 225px;
+  margin: auto;
+  display: flex;
+  align-items:center;
+  justify-content:center;
+}
+.cover_container {
+  width: 350px;
+  height: 350px;
+  border: 2px solid black;
+  display: flex;
+  align-items:center;
+  justify-content:center;
+}
+.cover {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.form-control {
+  @extend .form-control;
+}
+
+.form-group > input,
+.form-group > textarea {
+  @extend .form-control;
+}
+
+
+//customize validation error css
+#error_explanation {
+  @extend .alert;
+  @extend .alert-danger;
+  margin: 20px;
+}
+
+//customize toastr message's position and width
+#toast-container.toast-top-center > div {
+  min-width: fit-content;
+  margin-top: 70px;
+}
+
+//customize cart counter
+.btn-small {
+  padding: 0 5px;
+}
+
+//define class for item title and price
+.item-title {
+  font-size: 1.3rem;
+}
+
+.price {
+  font-size: 1.4rem;
+  font-style: italic;
+  font-weight: bold;
+  color: #f1490a;
+}
+
+.comments-area {
+  margin-top: 40px;
+  margin-left: 30px;
+  padding-right: 30px;
+
+}

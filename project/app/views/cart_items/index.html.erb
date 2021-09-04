@@ -1,0 +1,81 @@
+
+<%= render :partial => 'layouts/share_head', :locals => {title: 'Items in Cart',
+                                                         details: 'Pick what you want to buy in your cart. Only you and Admin can see it.',
+                                                         buttons: @button_group} %>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Item</th>
+      <% if current_user.usertype.zero? %>
+        <th>User</th>
+      <% end %>
+      <th>Unit Price</th>
+      <th>Num</th>
+      <th>Total Price</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cart_items.each do |cart_item| %>
+      <tr>
+        <td>
+          <div class="thumb_container">
+            <%= image_tag cart_item.item.cover_img, class: 'cover' %>
+          </div>
+        </td>
+        <td class="item-title">
+          <%= link_to cart_item.item.title, cart_item.item %>
+        </td>
+        <% if current_user.usertype.zero? %>
+          <td><%= cart_item.user.username %></td>
+        <% end %>
+        <td style="font-style: italic"><%= cart_item.item.price %></td>
+        <td>
+          <%= cart_item.num %> &nbsp;
+          <div class="btn-group-vertical">
+            <%= link_to increase_cart_items_path(id: cart_item.id, cart_item: {item_id: cart_item.item_id, user_id: cart_item.user_id, num: cart_item.num}), class: 'btn btn-light btn-small' do %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+              </svg>
+            <% end %>
+
+            <%# if num is 1 should use delete button instead of this %>
+            <% if cart_item.num == 1 %>
+              <%= link_to '#', class: 'btn btn-light btn-small disabled' do %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                </svg>
+              <% end %>
+            <% else %>
+              <%= link_to decrease_cart_items_path(id: cart_item.id, cart_item: {item_id: cart_item.item_id, user_id: cart_item.user_id, num: cart_item.num}), class: 'btn btn-light btn-small' do %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                </svg>
+              <% end %>
+            <% end %>
+
+          </div>
+
+        </td>
+        <td class="price"><%= cart_item.total_price(cart_item) %></td>
+        <td><%= link_to 'Checkout', new_order_path(cart_item: {item_id: cart_item.item_id, user_id: cart_item.user_id, num: cart_item.num}), class: 'btn btn-success btn-block ' %></td>
+        <td><%= link_to 'Delete', cart_item, class: 'btn btn-outline-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  <tr>
+    <th></th>
+    <th class="item-title">Total</th>
+    <th></th>
+    <th></th>
+    <th class="price"><%= @cart_item.sum_total(@cart_items) %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  </tbody>
+</table>
+
+<br>

@@ -1,0 +1,40 @@
+<%= stylesheet_link_tag 'users', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name), layout: :horizontal,
+                       label_col: "col-sm-4 text-right", control_col: "col-sm-8",
+                       html: {class: 'form-signin text-center'}) do |f| %>
+
+  <h2 class="h2 mb-3 font-weight-normal" style="text-align: center; margin-top: 10px">Sign up</h2>
+
+  <%#= render "users/shared/error_messages", resource: resource %>
+
+
+  <%= f.text_field :username, autofocus: true, autocomplete: "username", required: true%>
+
+  <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true %>
+
+  <%= f.password_field :password, autocomplete: "new-password", placeholder: @minimum_password_length.to_s + ' characters minimum', required: true %>
+
+  <%= f.password_field :password_confirmation, autocomplete: "new-password", required: true %>
+
+  <%= f.select :usertype, [['Consumer', 1], ['Store', 2]], help: "User's type CANNOT be changed once you create this account." %>
+
+  <div class="actions">
+    <%= f.submit "Sign up", class: 'btn btn-lg btn-success btn-block' %>
+  </div>
+<% end %>
+
+
+<%# Only using admin@exmaple.com can one sign up as Admin %>
+<script>
+    $(document).ready(function(){
+        $('#user_email').on('input propertychange', function() {
+            var key = $(this).val();
+            if (key == 'admin@example.com') {
+                $('#user_usertype').append("<option value='0'>Admin</option>")
+            }
+            else {
+                $("#user_usertype option[value='0']").remove();
+            }
+        });
+    });
+</script>

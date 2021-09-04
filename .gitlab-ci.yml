@@ -1,0 +1,20 @@
+# test:
+#    stage: test
+#    script:
+#      - cd cookbook3
+#      - bundle install
+#      - rails db:migrate RAILS_ENV=test
+#      - rails test
+#    only:
+#      - cookbook3
+
+deploy:
+  stage: deploy
+  script:
+    # - sudo apt-get install -y rsync
+    - puma-stop 5000
+    - rsync -arv ./project ~
+    - cd ~/project
+    - nohup rails server -d -b 0.0.0.0 -p 5000 &
+  only:
+    - project

@@ -1,0 +1,41 @@
+<%= stylesheet_link_tag 'users', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+
+<%= bootstrap_form_with(model: [@item, comment], local: true, layout: :horizontal,
+    label_col: "col-sm-2 text-right", control_col: "col-sm-10",
+    html: { class: 'form-signin text-center'}) do |form| %>
+
+
+  <div class="row" style="margin: 10px 0">
+    <div class="col-sm-4 my-auto">
+      <div class="thumb_container">
+        <%= image_tag @item.cover_img, class: 'cover' %>
+      </div>
+    </div>
+    <div class="col-sm-5 item-title my-auto">
+      <b><%= @item.title %></b> <br />
+      <i>Released by: <%= @item.user.username %></i>
+    </div>
+    <div class="col-sm-3 my-auto" style="align-items: center">
+      <span class="price">￥ <%= @item.price.to_f %></span>
+    </div>
+  </div>
+
+  <div class="row" style="border-bottom: 2px solid #CCCCCC; margin: 30px 0 "></div>
+
+  <div class="field">
+    <%= form.hidden_field :user_id, value: current_user.id %>
+  </div>
+
+  <div class="field">
+    <%= form.hidden_field :item_id, value: @item.id %>
+  </div>
+
+  <div class="field">
+    <%= form.text_area :content %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: 'btn btn-primary btn-lg' %>
+  </div>
+<% end %>
